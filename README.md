@@ -63,7 +63,8 @@ To download the docker image without: (estimated size 8gb)
 sudo bash InstallScript.sh
 ```
 
-This process will install the drivers, the docker packages. It will take a while and requires elevated permissions
+This process will install the drivers, the docker packages. It will take a while and requires elevated permissions.
+It will also create a docker volume with the Kraken Database to be used with Pima.
 
 ## Add Docker Group
 Though the installation script attempts to configure the docker group, you may need to run the following to interact the docker outside of root
