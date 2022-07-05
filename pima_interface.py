@@ -32,7 +32,7 @@ def calldocker(reference,mutation,output,tag,fast5=None,fastq=None):
     tag = 'latest' #TESTING ONLY
     output_generator = docker.run(
         command=command,
-        image='appliedbioinformaticslab/pima-docker:{}'.format(tag),
+        image='kyxsune/pima-docker:{}'.format(tag),
         volumes=[(os.getcwd(),"/home/DockerDir/mountpoint/"),
                  ('pima',"/home/DockerDir/Data")],
         gpus="all",
