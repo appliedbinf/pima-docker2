@@ -49,7 +49,7 @@ for i in os.listdir(path):
     if '.fasta' in i:
         Names.append(createmutdir(i))
 
-with open("pima_interface_T.py","r") as pima_int:
+with open("pima_interface_Original.py", "r") as pima_int:
     data = pima_int.readlines()
 
 #print(data[10])
