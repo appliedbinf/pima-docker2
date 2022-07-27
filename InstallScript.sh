@@ -44,7 +44,7 @@ mv plasmids_and_vectors.fasta Temp_Data/plasmids_and_vectors.fasta
 
 #create kraken standard database
 wget https://genome-idx.s3.amazonaws.com/kraken/k2_standard_20210517.tar.gz
-tar -xvf k2_standard_20210517.tar.gz --directory /Temp_Data/kraken2
+tar -xvf k2_standard_20210517.tar.gz --directory Temp_Data/kraken2
 
 sudo docker run --rm -v `pwd`:/src -v pima:/data busybox cp -r /Data/Temp_Data /data
 
