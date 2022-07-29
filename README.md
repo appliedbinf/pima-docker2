@@ -1,4 +1,4 @@
-# Docker container for PIMA
+# Docker container for PIMA v2
 This repository has the following structure:
 
  * Interfaces (holds the interfaces for interacting with the docker)
