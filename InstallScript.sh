@@ -12,8 +12,8 @@ sudo apt-get install -y \
 
 wget -qO- https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
-wget https://raw.githubusercontent.com/appliedbinf/pima-docker/main/Interfaces/pima.sh
-wget https://raw.githubusercontent.com/appliedbinf/pima-docker/main/Interfaces/pima_interface.py
+wget https://raw.githubusercontent.com/appliedbinf/pima-docker2/main/Interfaces/pima.sh
+wget https://raw.githubusercontent.com/appliedbinf/pima-docker2/main/Interfaces/pima_interface.py
 
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 sudo apt-get update
@@ -52,4 +52,5 @@ sudo docker run --rm -v `pwd`:/src -v pima:/data busybox cp -r /src/Temp_Data /d
 rm -r Temp_Data
 rm -f k2_standard_20210517.tar.gz
 
-
+#pull Docker Image
+docker pull appliedbioinformaticslab/pimadocker2:latest
