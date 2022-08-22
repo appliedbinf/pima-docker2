@@ -149,7 +149,7 @@ stis_KIM5}
 ## Bash Interface
 Though it should be installed with the installation script, it is also accessible via:
 ```commandline
-wget https://raw.githubusercontent.com/appliedbinf/pima-docker/main/pima.sh
+wget https://raw.githubusercontent.com/appliedbinf/pima-docker2/main/pima_interface.py
 ```
 You may run it in the same way as the python interface with the same flags
 ```commandline
@@ -162,7 +162,7 @@ For finer control, one may pass parameters directly to the docker as though it w
 
 The standard format for executing a docker image is as follows:
 ```commandline
-docker run -it --gpus all --mount type=bind,source=<DesiredDirectory>,target=/home/DockerDir/mountpoint/ appliedbioinformaticslab/pima-docker:kraken <any arguments to pima>
+docker run -it --gpus all --mount type=bind,source=<DesiredDirectory>,target=/home/DockerDir/mountpoint/ appliedbioinformaticslab/pimadocker2:latest <any arguments to pima>
 ```
 ** A full treatment of how to interact with docker containers via mounting is given [here](https://docs.docker.com/storage/bind-mounts/) **  
 ** Note: the --gpus all flag denotes that the container may access GPUs on the host device and is required **
@@ -172,17 +172,17 @@ Consider an example scenario where you want to assemble Bacillus anthracis ont r
 ## Python Interface
 You may either provide the reference files:
 ```commandline
-python pima_inteface.py --reference_genome ref.fasta --mutation mutation_regions.bed \
+python pima_interface.py --reference_genome ref.fasta --mutation mutation_regions.bed \
 --Fast5 barcodes_folder/ --output ont_outpt
 ```
 Or use the included reference and mutation genome files
 ```commandline
-python pima_inteface.py --Preloded_Reference bacillus_anthracis --Fast5 barcodes_folder/ --output ont_outpt
+python pima_interface.py --Preloded_Reference bacillus_anthracis --Fast5 barcodes_folder/ --output ont_outpt
 ```
 ## Direct access
 The direct access command essentially appends all the flags for [pima](https://github.com/appliedbinf/pima/blob/master/README.md#quickstart-guide) to the docker command:
 ```commandline
-docker run -it --gpus all --mount type=bind,source=<DesiredDirectory>,target=/home/DockerDir/mountpoint/ appliedbioinformaticslab/pima-docker:kraken \
+docker run -it --gpus all --mount type=bind,source=<DesiredDirectory>,target=/home/DockerDir/mountpoint/ appliedbioinformaticslab/pimadocker2:latest \
 --out ont_output --ont-fast5 barcodes_folder --threads 16 --overwrite --genome-size 5m \
 --verb 3 --reference-genome ref.fasta --mutation-regions mutation_regions.bed
 ```
