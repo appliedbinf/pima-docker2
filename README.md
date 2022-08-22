@@ -51,7 +51,7 @@ This may take a while, its recommended you restart your system after the drivers
 Download the installation scripts to your system
 
 ```commandline
-wget https://raw.githubusercontent.com/appliedbinf/pima-docker/main/InstallScript.sh
+wget https://raw.githubusercontent.com/appliedbinf/pima-docker2/main/InstallScript.sh
 ```
 
 To download the docker image with kraken databases loaded: (estimated size 70gb)
@@ -81,7 +81,7 @@ The full documentation for this process is [here](https://docs.docker.com/engine
 # Testing installation
 In order to test if the installation was successful, run the following from the interactive docker shell.
 ```commandline
-sudo run -it appliedbioinformaticslab/pima-docker:kraken
+sudo run -it appliedbioinformaticslab/pimadocker2:latest
 ```
 You should see the --help output for PiMA.
 
