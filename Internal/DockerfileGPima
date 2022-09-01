@@ -51,9 +51,12 @@ ENV PATH /data/reference_files/:$PATH
 ENV REFERENCE="data/reference_files/"
 #ENV KRAKEN2_DB_PATH="/data/kraken2"
 
+RUN wget http://pima.appliedbinf.com/data/plasmids_and_vectors.fasta
+RUN mv plasmids_and_vectors.fasta pima_md/data/plasmids_and_vectors.fasta
+
 SHELL ["/bin/bash", "-c"]
 
-WORKDIR /data/instance/uploads/
+#WORKDIR /data/instance/uploads/
 
 #Set Pimascript as the entrypoint
 ENTRYPOINT ["/bin/bash", "/home/DockerDir/pima_gap.sh"]
