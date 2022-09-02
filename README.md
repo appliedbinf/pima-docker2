@@ -81,7 +81,7 @@ The full documentation for this process is [here](https://docs.docker.com/engine
 # Testing installation
 In order to test if the installation was successful, run the following from the interactive docker shell.
 ```commandline
-sudo run -it appliedbioinformaticslab/pimadocker2:latest
+sudo docker run -it appliedbioinformaticslab/pimadocker2:latest
 ```
 You should see the --help output for PiMA.
 
