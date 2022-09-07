@@ -12,8 +12,7 @@ sudo apt-get install -y \
 
 wget -qO- https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
-wget https://raw.githubusercontent.com/appliedbinf/pima-docker2/main/Interfaces/pima.sh
-wget https://raw.githubusercontent.com/appliedbinf/pima-docker2/main/Interfaces/pima_interface.py
+wget https://raw.githubusercontent.com/appliedbinf/pima-docker2/main/pima_interface.py
 
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 sudo apt-get update
