@@ -44,7 +44,7 @@ mv plasmids_and_vectors.fasta Temp_Data/plasmids_and_vectors.fasta
 
 #create kraken standard database
 wget ftp://ftp.ccb.jhu.edu/pub/data/kraken2_dbs/old/minikraken2_v2_8GB_201904.tgz
-tar -xvf k2_standard_20210517.tar.gz --directory Temp_Data/kraken2
+tar -xvf Minikraken2_v2_8GB_201904.tgz --directory Temp_Data/kraken2
 
 sudo docker run --rm -v `pwd`:/src -v pima:/data busybox cp -r /src/Temp_Data /data
 
