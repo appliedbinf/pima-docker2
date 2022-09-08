@@ -49,9 +49,15 @@ ENV PATH /home/DockerDir/guppy/bin:$PATH
 ENV PATH /home/DockerDir/pima:$PATH
 ENV PATH /home/DockerDir/:$PATH
 ENV REFERENCE="/home/DockerDir/References"
+ENV KRAKEN2_DB_PATH="/home/DockerDir/pima_md/data/kraken2"
+
 
 RUN wget http://pima.appliedbinf.com/data/plasmids_and_vectors.fasta
 RUN mv plasmids_and_vectors.fasta pima_md/data/plasmids_and_vectors.fasta
+
+RUN wget ftp://ftp.ccb.jhu.edu/pub/data/kraken2_dbs/old/minikraken2_v2_8GB_201904.tgz
+RUN mkdir pima_md/data/kraken2
+RUN tar -xvf minikraken2_v2_8GB_201904.tgz -C pima_md/data/kraken2 --strip-components=1
 
 SHELL ["/bin/bash", "-c"]
 

@@ -34,22 +34,22 @@ sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
 # sudo service docker restart
 
 # Create Docker Volume
-sudo docker volume create pima
-mkdir Temp_Data
-mkdir Temp_Data/kraken2
+#sudo docker volume create pima
+#mkdir Temp_Data
+#mkdir Temp_Data/kraken2
 
 #create plasmid database
-wget http://pima.appliedbinf.com/data/plasmids_and_vectors.fasta
-mv plasmids_and_vectors.fasta Temp_Data/plasmids_and_vectors.fasta
+#wget http://pima.appliedbinf.com/data/plasmids_and_vectors.fasta
+#mv plasmids_and_vectors.fasta Temp_Data/plasmids_and_vectors.fasta
 
 #create kraken standard database
-wget ftp://ftp.ccb.jhu.edu/pub/data/kraken2_dbs/old/minikraken2_v2_8GB_201904.tgz
-tar -xvf Minikraken2_v2_8GB_201904.tgz --directory Temp_Data/kraken2
+#wget ftp://ftp.ccb.jhu.edu/pub/data/kraken2_dbs/old/minikraken2_v2_8GB_201904.tgz
+#tar -xvf Minikraken2_v2_8GB_201904.tgz --directory Temp_Data/kraken2
 
-sudo docker run --rm -v `pwd`:/src -v pima:/data busybox cp -r /src/Temp_Data /data
+#sudo docker run --rm -v `pwd`:/src -v pima:/data busybox cp -r /src/Temp_Data /data
 
-rm -r Temp_Data
-rm -f k2_standard_20210517.tar.gz
+#rm -r Temp_Data
+#rm -f k2_standard_20210517.tar.gz
 
 #pull Docker Image
 docker pull appliedbioinformaticslab/pimadocker2:latest
