@@ -211,6 +211,7 @@ if not os.path.exists(opts['output']):
 
 def calldocker(opts):
     command_string = ' '.join(f'--{key.replace("_","-")}={value}' for key, value in opts.items())
+    #Need to add a handler for just flags
     command = command_string.split(' ')
     output_generator = docker.run(
         command=command,
