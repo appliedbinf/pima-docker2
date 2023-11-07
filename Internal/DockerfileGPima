@@ -1,4 +1,5 @@
-FROM nvidia/cuda:11.4.2-devel-ubuntu20.04
+# FROM nvidia/cuda:11.4.2-devel-ubuntu20.04
+FROM ubuntu:focal-20231003
 
 RUN apt-get update
 
@@ -37,9 +38,10 @@ WORKDIR /home/DockerDir/
 # WE MAY NOT NEED IT ANYMORE
 RUN conda env update -n base --file /home/DockerDir/environment.yml
 
-RUN sed -i 's/cgi/html/g' /home/miniconda/lib/python3.8/site-packages/quast_libs/site_packages/jsontemplate/jsontemplate.py
+#RUN sed -i 's/cgi/html/g' /home/miniconda/lib/python3.8/site-packages/quast_libs/site_packages/jsontemplate/jsontemplate.py
 
-RUN medaka tools download_models
+#RUN conda create -n medaka -c conda-forge -c bioconda medaka
+#RUN medaka tools download_models
 
 # Pull The latest In
 # RUN git clone https://github.com/appliedbinf/pima_md.git 
@@ -47,7 +49,10 @@ RUN medaka tools download_models
 # copy the local conda package channel directory
 # TODO: Change to mamba?
 # TODO: Copy channel location to docker1
-RUN conda install -c conda-forge -c bioconda -c appliedbinf pima=1.7=py38_1
+RUN conda install -n base --override-channels -c conda-forge mamba 'python_abi=*=*cp*'
+RUN mamba install -c conda-forge -c bioconda -c appliedbinf pima=1.7.1=py38_1
+# mamba install -c conda-forge -c bioconda -c local pima_channel
+
 
 # untar it
 RUN mkdir pima
