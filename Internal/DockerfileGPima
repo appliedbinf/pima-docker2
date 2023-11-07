@@ -55,10 +55,10 @@ RUN mamba install -c conda-forge -c bioconda -c appliedbinf pima=1.7.1=py38_1
 
 
 # untar it
-RUN mkdir pima
-RUN mv pima-1.7.1-py38_1.tar.bz2 pima/ && cd pima
-RUN tar -xvf pima-1.7.1-py38_1.tar.bz2 && rm pima-1.7.1-py38_1.tar.bz2
-RUN cd ..
+# RUN mkdir pima
+# RUN mv pima-1.7.1-py38_1.tar.bz2 pima/ && cd pima
+# RUN tar -xvf pima-1.7.1-py38_1.tar.bz2 && rm pima-1.7.1-py38_1.tar.bz2
+# RUN cd ..
 
 
 RUN tar -xvf ont-guppy_6.0.1_linux64.tar.gz && mv ont-guppy /home/DockerDir/guppy && rm ont-guppy_6.0.1_linux64.tar.gz
