@@ -52,4 +52,6 @@ sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
 #rm -f k2_standard_20210517.tar.gz
 
 #pull Docker Image
-docker pull appliedbioinformaticslab/pimadocker2:latest
+# docker pull appliedbioinformaticslab/pimadocker2:latest
+
+# build the final pima-docker image or run the container
