@@ -1,16 +1,20 @@
 # FROM nvidia/cuda:11.4.2-devel-ubuntu20.04
 FROM nvidia/cuda:12.2.2-devel-ubuntu20.04
+
 # FROM ubuntu:focal-20231003
 
-RUN apt-get update
+RUN apt update
 
 ENV PATH="/home/miniconda/bin:${PATH}"
 ARG PATH="/home/miniconda/bin:${PATH}"
 
-RUN apt-get install -y libgd-perl
-RUN apt-get install -y git
+RUN apt install -y git
+RUN apt install -y libgd-perl
 
-RUN apt-get install -y wget && rm -rf /var/lib/apt/lists/*
+
+#RUN apt-get clean
+RUN apt install -y wget=1.20.3-1ubuntu2 && rm -rf /var/lib/apt/lists/*
+
 
 RUN wget \
     https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh \
@@ -38,6 +42,10 @@ ARG CHANNEL_PATH=/home/PimaChannel
  
 ADD $HOST_CHANNEL_PATH $CHANNEL_PATH
 
+ARG HOST_CHANNEL_PATH=pima_channel
+ARG CHANNEL_PATH=/home/PimaChannel
+ 
+ADD $HOST_CHANNEL_PATH $CHANNEL_PATH
 WORKDIR /home/DockerDir/
 
 # WE MAY NOT NEED IT ANYMORE
@@ -55,10 +63,9 @@ WORKDIR /home/DockerDir/
 # TODO: Change to mamba?
 # TODO: Copy channel location to docker1
 RUN conda install -n base --override-channels -c conda-forge mamba python=3.8
-# mamba install -c conda-forge python=3.12.0
-# RUN mamba install -c conda-forge -c bioconda -c appliedbinf pima=1.7.1=py38_1
-RUN mamba install -c conda-forge -c bioconda -c $CHANNEL_PATH pima=1.7.1=py38_1
 
+RUN mamba install -c conda-forge -c bioconda -c $CHANNEL_PATH pima=1.8=py38_5
+# mamba install -c conda-forge -c bioconda -c local pima_channel
 
 # untar it
 # RUN mkdir pima
@@ -67,8 +74,9 @@ RUN mamba install -c conda-forge -c bioconda -c $CHANNEL_PATH pima=1.7.1=py38_1
 # RUN cd ..
 
 
-RUN tar -xvf ont-guppy_6.0.1_linux64.tar.gz && mv ont-guppy /home/DockerDir/guppy && rm ont-guppy_6.0.1_linux64.tar.gz
-# RUN tar -xvf dorado-0.4.2-linux-x64.tar && mv dorado-0.4.2-linux-x64 /home/DockerDir/dorado && rm dorado-0.4.2-linux-x64.tar
+RUN tar -xvf ont-guppy_6.5.7_linux64.tar.gz && mv ont-guppy /home/DockerDir/guppy && rm ont-guppy_6.5.7_linux64.tar.gz
+#RUN tar -xvf dorado-0.4.2-linux-x64.tar.gz && mv dorado /home/DockerDir/dorado && rm dorado-0.4.2-linux-x64.tar.gz
+
 
 ENV PATH /home/DockerDir/guppy/bin:$PATH
 ENV PATH /home/DockerDir/pima:$PATH
@@ -76,9 +84,15 @@ ENV PATH /home/DockerDir/pima:$PATH
 # ENV REFERENCE="data/reference_files/"
 #ENV KRAKEN2_DB_PATH="/data/kraken2"
 
+ARG DATA_DIR='/home/miniconda/lib/python3.8/site-packages/pima/data'
 RUN wget http://pima.appliedbinf.com/data/plasmids_and_vectors.fasta
-RUN mv plasmids_and_vectors.fasta /home/miniconda/lib/python3.8/site-packages/pima/data/plasmids_and_vectors.fasta
 
+RUN mv plasmids_and_vectors.fasta $DATA_DIR/plasmids_and_vectors.fasta
+
+
+ARG REFERENCES_DIR='References'
+COPY ${REFERENCES_DIR} ${DATA_DIR}/reference_sequences/
+ENV REF_DIR="${DATA_DIR}/reference_sequences/"
 SHELL ["/bin/bash", "-c"]
 
 #WORKDIR /data/instance/uploads/
