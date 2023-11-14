@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import argparse
 import os
 from python_on_whales import docker
@@ -59,8 +61,8 @@ def calldocker(reference, mutation, output, extraCommands, fast5=None, fastq=Non
 
 
 def constructPathO(Organism):
-    reference = os.path.join(REFERENCE_DIR, "{0}/{0}.fasta".format(Organism))
-    mutation = os.path.join(REFERENCE_DIR, "{0}/{0}_r.bed".format(Organism))
+    reference = os.path.join(REFERENCE_DIR, "{0}/genome.fasta".format(Organism))
+    mutation = os.path.join(REFERENCE_DIR, "{0}/mutation_regions.bed".format(Organism))
     print(reference)
     print(mutation)
     return (reference, mutation)
