@@ -1,5 +1,6 @@
 # FROM nvidia/cuda:11.4.2-devel-ubuntu20.04
-FROM ubuntu:focal-20231003
+FROM nvidia/cuda:12.2.2-devel-ubuntu20.04
+# FROM ubuntu:focal-20231003
 
 RUN apt-get update
 
@@ -32,11 +33,15 @@ ENV LANG en_US.UTF-8
 RUN mkdir /home/DockerDir
 
 ADD ./ /home/DockerDir
+ARG HOST_CHANNEL_PATH=pima_channel
+ARG CHANNEL_PATH=/home/PimaChannel
+ 
+ADD $HOST_CHANNEL_PATH $CHANNEL_PATH
 
 WORKDIR /home/DockerDir/
 
 # WE MAY NOT NEED IT ANYMORE
-RUN conda env update -n base --file /home/DockerDir/environment.yml
+#RUN conda env update -n base --file /home/DockerDir/environment.yml
 
 #RUN sed -i 's/cgi/html/g' /home/miniconda/lib/python3.8/site-packages/quast_libs/site_packages/jsontemplate/jsontemplate.py
 
@@ -49,9 +54,10 @@ RUN conda env update -n base --file /home/DockerDir/environment.yml
 # copy the local conda package channel directory
 # TODO: Change to mamba?
 # TODO: Copy channel location to docker1
-RUN conda install -n base --override-channels -c conda-forge mamba 'python_abi=*=*cp*'
-RUN mamba install -c conda-forge -c bioconda -c appliedbinf pima=1.7.1=py38_1
-# mamba install -c conda-forge -c bioconda -c local pima_channel
+RUN conda install -n base --override-channels -c conda-forge mamba python=3.8
+# mamba install -c conda-forge python=3.12.0
+# RUN mamba install -c conda-forge -c bioconda -c appliedbinf pima=1.7.1=py38_1
+RUN mamba install -c conda-forge -c bioconda -c $CHANNEL_PATH pima=1.7.1=py38_1
 
 
 # untar it
@@ -62,15 +68,16 @@ RUN mamba install -c conda-forge -c bioconda -c appliedbinf pima=1.7.1=py38_1
 
 
 RUN tar -xvf ont-guppy_6.0.1_linux64.tar.gz && mv ont-guppy /home/DockerDir/guppy && rm ont-guppy_6.0.1_linux64.tar.gz
+# RUN tar -xvf dorado-0.4.2-linux-x64.tar && mv dorado-0.4.2-linux-x64 /home/DockerDir/dorado && rm dorado-0.4.2-linux-x64.tar
 
 ENV PATH /home/DockerDir/guppy/bin:$PATH
 ENV PATH /home/DockerDir/pima:$PATH
-ENV PATH /data/reference_files/:$PATH
-ENV REFERENCE="data/reference_files/"
+# ENV PATH /data/reference_files/:$PATH
+# ENV REFERENCE="data/reference_files/"
 #ENV KRAKEN2_DB_PATH="/data/kraken2"
 
 RUN wget http://pima.appliedbinf.com/data/plasmids_and_vectors.fasta
-RUN mv plasmids_and_vectors.fasta pima_md/data/plasmids_and_vectors.fasta
+RUN mv plasmids_and_vectors.fasta /home/miniconda/lib/python3.8/site-packages/pima/data/plasmids_and_vectors.fasta
 
 SHELL ["/bin/bash", "-c"]
 
