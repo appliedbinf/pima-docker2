@@ -13,7 +13,10 @@ import json
 
 PIMA_IMAGE = "pima_cdc/pima:latest"
 MOUNT_POINT = "/home/DockerDir/mountpoint"
-REFERENCE_DIR = "/home/miniconda/lib/python3.8/site-packages/pima/data/reference_sequences"
+DATA_DIR = "/home/miniconda/lib/python3.8/site-packages/pima/data"
+REFERENCE_DIR = os.path.join(DATA_DIR, "reference_sequences")
+KRAKEN_DIR = "/home/miniconda/lib/python3.8/site-packages/pima/data/kraken2"
+HOST_PIMA_DATA_DIR = os.environ.get('PIMA_DATA_DIR', None)
 
 # PIMA_IMAGE = 'appliedbioinformaticslab/pimadocker2:latest'
 
@@ -47,10 +50,13 @@ def calldocker(reference, mutation, output, extraCommands, fast5=None, fastq=Non
         command.remove("--contamination")
     print(command)
     tag = "latest"  # TESTING ONLY
+    volumes=[(os.getcwd(), MOUNT_POINT)]
+    if HOST_PIMA_DATA_DIR:
+        volumes.append(tuple((HOST_PIMA_DATA_DIR, DATA_DIR, "ro")))
     output_generator = docker.run(
         command=command,
         image=PIMA_IMAGE,
-        volumes=[(os.getcwd(), MOUNT_POINT)],
+        volumes=volumes,
         gpus="all",
         tty=True,
         interactive=True,
