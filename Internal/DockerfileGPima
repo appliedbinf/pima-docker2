@@ -10,7 +10,7 @@ ARG PATH="/home/miniconda/bin:${PATH}"
 
 RUN apt install -y git
 RUN apt install -y libgd-perl
-
+RUN apt-get install -y parallel
 
 #RUN apt-get clean
 RUN apt install -y wget=1.20.3-1ubuntu2 && rm -rf /var/lib/apt/lists/*
@@ -89,6 +89,10 @@ RUN wget http://pima.appliedbinf.com/data/plasmids_and_vectors.fasta
 
 RUN mv plasmids_and_vectors.fasta $DATA_DIR/plasmids_and_vectors.fasta
 
+RUN mkdir $DATA_DIR/kraken2
+RUN wget https://genome-idx.s3.amazonaws.com/kraken/k2_standard_08gb_20230605.tar.gz
+RUN tar -xvf k2_standard_08gb_20230605.tar.gz -C $DATA_DIR/kraken2
+RUN rm k2_standard_08gb_20230605.tar.gz
 
 ARG REFERENCES_DIR='References'
 COPY ${REFERENCES_DIR} ${DATA_DIR}/reference_sequences/
@@ -96,8 +100,13 @@ ENV REF_DIR="${DATA_DIR}/reference_sequences/"
 SHELL ["/bin/bash", "-c"]
 
 #WORKDIR /data/instance/uploads/
+# Giving exec permission for sam2psl. Ideally should be handled in conda package
+RUN chmod +x /home/miniconda/lib/python3.8/site-packages/pima/src/sam2psl.py
+
 
 #Set Pimascript as the entrypoint
 ENTRYPOINT ["/bin/bash", "/home/DockerDir/pima_gap.sh"]
 #Set the Default parameters for testing
 CMD ["--help"]
+
+
