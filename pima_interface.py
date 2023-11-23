@@ -52,7 +52,7 @@ def calldocker(reference, mutation, output, extraCommands, fast5=None, fastq=Non
     tag = "latest"  # TESTING ONLY
     volumes=[(os.getcwd(), MOUNT_POINT)]
     if HOST_PIMA_DATA_DIR:
-        volumes.append(tuple((HOST_PIMA_DATA_DIR, DATA_DIR, "ro")))
+        volumes.append(tuple((HOST_PIMA_DATA_DIR, DATA_DIR)))
     output_generator = docker.run(
         command=command,
         image=PIMA_IMAGE,
